@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Main {
 		public static void main(String[] args) {
 		
@@ -39,6 +38,7 @@ public class Main {
 					System.out.println("Vui lòng nhập lại từ 1 -> 4");
 					chon = s.nextInt();
 					
+					
 					switch(chon){
 					
 					 		case 1:
@@ -56,11 +56,11 @@ public class Main {
 					 		    System.out.println("1. REGULAR");
 					 		    System.out.println("2. PART_TIME");
 					 		    System.out.println("3. INTERNATIONAL");
-					 		    int typeChoice = s.nextInt();
+					 		    int kieu = s.nextInt();
 
 					 		    StudentType type = null;
 
-					 		    switch (typeChoice) {
+					 		    switch (kieu) {
 					 		        case 1:
 					 		            type = StudentType.REGULAR;
 					 		            break;

@@ -9,7 +9,7 @@ public class Main {
 		
 		Scanner s = new Scanner(System.in);
 		int i = 1;
-		int chon;
+		int chon = 0 ;
 			
 				List<Student>  list = new ArrayList<>();
 				
@@ -124,7 +124,7 @@ public class Main {
 					 }
 					
 					
-				}while(chon !=4);
+				}while(chon !=0);
 		}
 				
 }

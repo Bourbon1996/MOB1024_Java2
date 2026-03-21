@@ -1,5 +1,8 @@
 package lab2bai2;
 
-public class ProductCategory {
 
+public enum ProductCategory{
+	FOOD,
+	ELECTRONIC,
+	CLOTHING;
 }

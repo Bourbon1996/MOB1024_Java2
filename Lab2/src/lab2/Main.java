@@ -35,7 +35,7 @@ public class Main {
 					System.out.println("2. Danh sách từng loại sinh viên ");
 					System.out.println("3. Số lượng sinh viên ");
 					System.out.println("4. Thoát");
-					System.out.println("Vui lòng nhập lại từ 1 -> 4");
+					System.out.println("Lựa chọn từ 1 -> 4: ");
 					chon = s.nextInt();
 					
 					
@@ -52,6 +52,7 @@ public class Main {
 					 			
 					 			break;
 					 		case 2:
+					 			do {
 					 		    System.out.println("\nChon loai:");
 					 		    System.out.println("1. REGULAR");
 					 		    System.out.println("2. PART_TIME");
@@ -85,6 +86,7 @@ public class Main {
 					 		            }
 					 		        }
 					 		    }
+					 			}while(chon !=0);
 					 		    break;
 					 			
 					 	
@@ -125,6 +127,7 @@ public class Main {
 					
 					
 				}while(chon !=0);
+				s.close();
 		}
 				
 }

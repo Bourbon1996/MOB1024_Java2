@@ -4,5 +4,5 @@
 /**
  * 
  */
-module SLIDE1 {
+module lab5 {
 }

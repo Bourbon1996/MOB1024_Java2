@@ -12,6 +12,6 @@ import lombok.ToString;
 public class Tree {
 	private int node_id;
 	private String node_name;
-	private int parent_id;
+	private Integer parent_id;
 	private int level;
 }

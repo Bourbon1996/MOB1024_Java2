@@ -7,7 +7,7 @@ public class DbConnect {
 
     private static final String HOST = "localhost";
     private static final String PORT = "3306";
-    private static final String DBNAME = "java2_lab6";
+    private static final String DBNAME = "lab06_jdbc";
     private static final String USER = "root";
     private static final String PASSWORD = "28091996";
 

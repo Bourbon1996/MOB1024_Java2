@@ -49,29 +49,29 @@ public class StudentRepository {
 				return stu;				
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println("Lỗi " + e.getMessage());
+				e.printStackTrace();
 				return null;
 			}
 	}
 	// them student
-	public boolean insert(Student stu) {
-		try (Connection co = DbConnect.getConnection()){
-			String mysql = "insert into student(student_id, student_name, gender, gpa) values(?,?,?,?)";
-			PreparedStatement ps = co.prepareStatement(mysql);
-						
-			ps.setInt(1, stu.getStudent_id());
-	        ps.setString(2, stu.getStudent_name());
-	        ps.setString(3, stu.getGender());
-	        ps.setDouble(4, stu.getGpa());
 
-	        return ps.executeUpdate() > 0;
-	    } catch (Exception e) {
-	    	// TODO: handle exception
-	        System.out.println("Lỗi thêm: " + e.getMessage());
-	        return false;
-	    }
+	public boolean insert(Student stu) {
+		String sql = "INSERT INTO student (student_name, gender, gpa) values(?, ? ,?)";
+		try(Connection co = DbConnect.getConnection()) {
+			PreparedStatement ps = co.prepareStatement(sql);
+			
+				ps.setString(1, stu.getStudent_name());
+				ps.setString(2, stu.getGender());
+				ps.setDouble(3, stu.getGpa());
+				
+				return ps.executeUpdate() > 0;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
 	// sửa
 	public boolean update(Student stu) {
 		try (Connection co = DbConnect.getConnection()){
@@ -86,7 +86,7 @@ public class StudentRepository {
 	        return ps.executeUpdate() >0;
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Lỗi thêm: " + e.getMessage());
+			e.printStackTrace();
 	        return false;	    
 		}
 	}
@@ -102,7 +102,7 @@ public class StudentRepository {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Lỗi thêm: " + e.getMessage());
+			e.printStackTrace();
 	        return false;	
 		}
 	}

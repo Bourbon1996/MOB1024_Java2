@@ -3,6 +3,7 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,19 @@ public class TreeRepository {
 			PreparedStatement ps = co.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				Tree tr = new Tree(
-						rs.getInt("node_id"),
-						rs.getString("node_name"),
-						rs.getInt("parent_id"),
-						rs.getInt("level"));
-				list.add(tr);
+				int nodeId = rs.getInt("node_id");
+	            String nodeName = rs.getString("node_name");
+
+	            //  xử lý parent_id (có thể NULL)
+	            Integer parentId = rs.getInt("parent_id");
+	            if (rs.wasNull()) {
+	                parentId = null;
+	            }
+
+	            int level = rs.getInt("level");
+	          
+	            Tree tr = new Tree(nodeId, nodeName, parentId, level);
+	            list.add(tr);
 			}
 			return list;
 		} catch (Exception e) {
@@ -39,7 +47,10 @@ public class TreeRepository {
 			PreparedStatement ps = co.prepareStatement(sql);
 			ps.setInt(1, ID);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
+                Integer parentId = rs.getInt("parent_id");
+                if (rs.wasNull()) parentId = null;
+                
 				return new Tree(
 					rs.getInt("node_id"),
 					rs.getString("node_name"),
@@ -49,7 +60,7 @@ public class TreeRepository {
 			return null;
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Lỗi " + e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -57,18 +68,23 @@ public class TreeRepository {
 	
 	public boolean insert(Tree tr) {
 		try(Connection co = DbConnect.getConnection()) {
-			String sql = "insert into Tree(node_id, node_name, parent_id, level) values(?,?,?,?)";
+			String sql = "insert into Tree(node_name, parent_id, level) values(?,?,?)";
 			PreparedStatement ps = co.prepareStatement(sql);
-			
-			ps.setInt(1, tr.getNode_id());
-	        ps.setString(2, tr.getNode_name());
-	        ps.setInt(3, tr.getParent_id());
-	        ps.setInt(4, tr.getLevel());
+						
+	        ps.setString(1, tr.getNode_name());
+	        
+	        if (tr.getParent_id() == null) {
+                ps.setNull(2, Types.INTEGER);
+            } else {
+                ps.setInt(2, tr.getParent_id());
+            }
+	        ps.setInt(3, tr.getLevel());
 	        
 	        return ps.executeUpdate() > 0;
+	        
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Lỗi thêm: " + e.getMessage());
+			e.printStackTrace();
 	        return false;
 		}
 	}
@@ -80,14 +96,20 @@ public class TreeRepository {
 				PreparedStatement ps = co.prepareStatement(mysql);
 				
 				ps.setString(1, tr.getNode_name());
-		        ps.setInt(2, tr.getParent_id());
+				
+				if (tr.getParent_id() == null) {
+	                ps.setNull(2, Types.INTEGER);
+	            } else {
+	                ps.setInt(2, tr.getParent_id());
+	            }
+		        
 		        ps.setInt(3, tr.getLevel());
 		        ps.setInt(4, tr.getNode_id());
 		        
 		        return ps.executeUpdate() >0;
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println("Lỗi thêm: " + e.getMessage());
+				e.printStackTrace();
 		        return false;	    
 			}
 		}
@@ -103,7 +125,7 @@ public class TreeRepository {
 				
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println("Lỗi thêm: " + e.getMessage());
+				e.printStackTrace();
 		        return false;	
 			}
 		}

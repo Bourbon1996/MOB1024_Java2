@@ -9,32 +9,22 @@ import repository.TreeRepository;
 public class Main2 {
 
     // Hàm nhập Tree
-    public static Tree inputTree(Scanner sc, TreeRepository repo) {
-        int id;
+	public static Tree inputTree(Scanner sc) {
 
-        while (true) {
-            System.out.print("Nhập node_id: ");
-            id = sc.nextInt();
-            sc.nextLine();
+	    System.out.print("Nhập node_name: ");
+	    String name = sc.nextLine();
 
-            if (repo.findbyId(id) != null) {
-                System.out.println("ID đã tồn tại! Nhập lại.");
-            } else {
-                break;
-            }
-        }
+	    System.out.print("Nhập parent_id (0 nếu root): ");
+	    int parentInput = sc.nextInt();
 
-        System.out.print("Nhập node_name: ");
-        String name = sc.nextLine();
+	    Integer parentId = (parentInput == 0) ? null : parentInput;
 
-        System.out.print("Nhập parent_id: ");
-        int parentId = sc.nextInt();
+	    System.out.print("Nhập level: ");
+	    int level = sc.nextInt();
+	    sc.nextLine();
 
-        System.out.print("Nhập level: ");
-        int level = sc.nextInt();
-
-        return new Tree(id, name, parentId, level);
-    }
+	    return new Tree(0, name, parentId, level); 
+	}
 
     public static void main(String[] args) {
 
@@ -78,7 +68,7 @@ public class Main2 {
                     break;
 
                 case 3:
-                    Tree newTree = inputTree(sc, repo);
+                    Tree newTree = inputTree(sc);
                     if (repo.insert(newTree)) {
                         System.out.println("Thêm thành công!");
                     } else {
